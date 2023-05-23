@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import axios from 'axios'
 import Form from '../components/Form.vue'
 
@@ -43,7 +43,10 @@ const handleUpdate = async (event) => {
   try {
     console.log(`within ${categoryId.value}`)
     const response = await axios.put(`https://localhost:7191/api/category/${categoryId.value}`, updatedCategory) //post request with new category
-    categories.value = [...categories.value, response.data] // create new array from existing categories, with updated category added
+    // const returnedCategory = response.data
+    // const a = [...categories.value, {...returnedCategory}] // create new array from existing categories, with updated category added
+    const filteredCategories = categories.value.filter(category => category.id !== categoryId.value)
+    categories.value = [...filteredCategories, response.data] // create new array from existing categories, with updated category added
     categoryId.value = ''
     categoryName.value = ''
     categoryDescription.value = ''
@@ -56,12 +59,11 @@ const handleUpdate = async (event) => {
 //
 // Summary: event handler for category update
 const handleDelete = async (id) => {
-  console.log(id)
-
   try {
-    const response = await axios.delete(`https://localhost:7191/api/category/${id}`) //post request with new category
-    // categories.value = [...categories.value, response.data] // create new array from existing categories, with updated category added
-    alert(`Successfully updated name: ${response.data.name} description: ${response.data.description}`)
+    const removedCategory = categories.value.find(category => category.id === id)
+    await axios.delete(`https://localhost:7191/api/category/${id}`) //post request with new category
+    categories.value = categories.value.filter(category => category.id !== id)
+    alert(`Successfully Deleted name: ${removedCategory.name} description: ${removedCategory.description}`)
   } catch (error) {
     console.log(error)
   }
