@@ -3,8 +3,9 @@
     title: String,
     name: String,
     description: String,
-    isActive: Boolean,
-    handleSubmit: Function
+    // isActive: Boolean,
+    handleSubmit: Function,
+    handleCancel: Function
   })
   
   defineEmits(['update:name', 'update:description', 'update:isActive'])
@@ -27,15 +28,14 @@
           @input="$emit('update:description', $event.target.value)"
         />
       </p>
-      <p>
+      <!-- <p>
         <input 
           type="checkbox" 
-          :value="isActive"
           :checked="isActive"
           @input="$emit('update:isActive', $event.target.checked)"
           />
-        <label for="isActive">Is Active</label>
-      </p>
+          <label for="isActive">Is Active</label>
+      </p> -->
       <button type="submit">Submit</button>
     </form>
 </template>

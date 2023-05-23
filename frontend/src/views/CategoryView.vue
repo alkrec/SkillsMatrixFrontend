@@ -7,7 +7,7 @@ const categories = ref([])
 const categoryId = ref('')
 const categoryName = ref('')
 const categoryDescription = ref('')
-const categoryIsActive = ref(null)
+// const categoryIsActive = ref(null)
 
 
 
@@ -25,11 +25,11 @@ onMounted(async () => {
 
 //
 // Summary: get form ready for update
-const fillForm = (id, name, description, isActive) => { //assigning values to these reactive variables, activates form with v-if
+const fillForm = (id, name, description) => { //assigning values to these reactive variables, activates form with v-if
   categoryId.value = id
   categoryName.value = name
   categoryDescription.value = description
-  categoryIsActive.value = isActive
+  // categoryIsActive.value = isActive
 }
 
 
@@ -40,7 +40,8 @@ const handleUpdate = async (event) => {
   const updatedCategory = { //create new Category object from user input
     name: categoryName.value,
     description: categoryDescription.value,
-    isActive: categoryIsActive.value
+    isActive: true
+    // isActive: categoryIsActive.value
   }
 
   try {
@@ -52,22 +53,23 @@ const handleUpdate = async (event) => {
       return [...filteredArray, category] //add unchanged categories to array
     }, [])
     categories.value = updatedCategories // assign updatedCategories Array
-    categoryId.value = '' //clear form
-    categoryName.value = '' //clear form
-    categoryDescription.value = '' //clear form
-    categoryIsActive.value = '' //clear form
+    // categoryId.value = '' //clear form
+    // categoryName.value = '' //clear form
+    // categoryDescription.value = '' //clear form
+    // // categoryIsActive.value = '' //clear form
+    clearForm();
     alert(`Successfully updated name: ${response.data.name} description: ${response.data.description}`)
   } catch (error) {
     console.log(error)
   }
 }
 
-const clearForm = () => {
-  categoryId.value = '' 
-  categoryName.value = '' 
-  categoryDescription.value = '' 
-  categoryIsActive.value = '' 
-}
+// const clearForm = () => {
+//   categoryId.value = '' 
+//   categoryName.value = '' 
+//   categoryDescription.value = '' 
+//   categoryIsActive.value = null 
+// }
 
 //
 // Summary: event handler for category update
@@ -82,6 +84,15 @@ const handleDelete = async (id) => {
   }
 }
 
+//
+// Summary: event handler for category update
+const clearForm = () => {
+  categoryId.value = '' 
+  categoryName.value = '' 
+  categoryDescription.value = '' 
+  // categoryIsActive.value = null 
+}
+
 </script>
 
 <template>
@@ -90,7 +101,7 @@ const handleDelete = async (id) => {
     <ul>
       <li v-for="category in categories" :key="category.id">
         {{ category.name }} {{ category.description }}
-        <button v-on:click="() => fillForm(category.id, category.name, category.description, category.isActive)">Update</button>
+        <button v-on:click="() => fillForm(category.id, category.name, category.description)">Update</button>
       <button v-on:click="() => handleDelete(category.id)">Delete</button>
       </li>
     </ul>
@@ -99,9 +110,10 @@ const handleDelete = async (id) => {
       title="Update Category"
       v-model:name="categoryName"
       v-model:description="categoryDescription"
-      v-model:isActive="categoryIsActive"
       :handleSubmit="handleUpdate"></Form>
+      <button v-on:click="clearForm">Cancel</button>
     </div>
+    <!-- v-model:isActive="categoryIsActive" -->
     
   </main>
 </template>
