@@ -2,6 +2,7 @@
   // import { ref } from 'vue'
   // defineProps(['eventHandler', 'name', 'description'])
   defineProps({
+    title: String,
     name: String,
     description: String,
     handleSubmit: Function
@@ -11,6 +12,7 @@
 </script>
 
 <template>
+    <h2>{{ title }}</h2>
     <form v-on:submit="handleSubmit">
       <p>Name
         <input 

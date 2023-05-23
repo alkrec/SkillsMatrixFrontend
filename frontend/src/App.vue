@@ -14,8 +14,8 @@ import HelloWorld from './components/HelloWorld.vue'
     </div>
   </header> -->
   <nav>
-        <RouterLink to="/categories">Category List</RouterLink>
-        <RouterLink to="/category">Create New</RouterLink>
+        <RouterLink to="/category">Category List</RouterLink>
+        <RouterLink to="/createcategory">Create New</RouterLink>
   </nav>
 
   <RouterView />
