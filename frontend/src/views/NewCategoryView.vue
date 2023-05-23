@@ -22,7 +22,7 @@ const handleCreate = async (event) => {
   try {
     const response = await axios.post('https://localhost:7191/api/category', newCategory) //post request with new category
     alert(`Successfully added name: ${response.data.name} description: ${response.data.description}`)
-    router.push('/category')
+    router.push('/') //redirect to home page
   } catch (error) {
     console.log(error)
   }
