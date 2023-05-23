@@ -53,7 +53,19 @@ const handleUpdate = async (event) => {
   }
 }
 
+//
+// Summary: event handler for category update
+const handleDelete = async (id) => {
+  console.log(id)
 
+  try {
+    const response = await axios.delete(`https://localhost:7191/api/category/${id}`) //post request with new category
+    // categories.value = [...categories.value, response.data] // create new array from existing categories, with updated category added
+    alert(`Successfully updated name: ${response.data.name} description: ${response.data.description}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 </script>
 
@@ -63,15 +75,11 @@ const handleUpdate = async (event) => {
     <ul>
       <li v-for="category in categories" :key="category.id">
         {{ category.name }} {{ category.description }}
-        <button v-on:click="() => {
-          console.log(category.id)
-          fillForm(category.id, category.name, category.description)}">Update</button>
-                  <button v-on:click="() => {
-          console.log(category.id)
-          fillForm(category.id, category.name, category.description)}">Update</button>
+        <button v-on:click="() => fillForm(category.id, category.name, category.description)">Update</button>
+      <button v-on:click="() => handleDelete(category.id)">Delete</button>
       </li>
     </ul>
-    <div v-if="categoryName">
+    <div v-if="categoryId">
       <Form 
       title="Update Category"
       v-model:name="categoryName"

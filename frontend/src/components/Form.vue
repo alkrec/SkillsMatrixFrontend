@@ -1,6 +1,4 @@
 <script setup>
-  // import { ref } from 'vue'
-  // defineProps(['eventHandler', 'name', 'description'])
   defineProps({
     title: String,
     name: String,
