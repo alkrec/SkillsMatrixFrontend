@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 
 const categoryName = ref('')
 const categoryDescription = ref('')
+const categoryIsActive = ref(false)
 
 const router = useRouter()
 
@@ -16,8 +17,9 @@ const handleCreate = async (event) => {
   const newCategory = { //create new Category object from user input
     name: categoryName.value,
     description: categoryDescription.value,
-    isActive: true
+    isActive: categoryIsActive.value
   }
+  console.log(newCategory)
 
   try {
     const response = await axios.post('https://localhost:7191/api/category', newCategory) //post request with new category
@@ -36,6 +38,7 @@ const handleCreate = async (event) => {
       title="New Category"
       v-model:name="categoryName"
       v-model:description="categoryDescription"
+      v-model:isActive="categoryIsActive"
       :handleSubmit="handleCreate"></Form>
   </div>
 </template>
