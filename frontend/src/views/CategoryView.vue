@@ -43,10 +43,14 @@ const handleUpdate = async (event) => {
   try {
     console.log(`within ${categoryId.value}`)
     const response = await axios.put(`https://localhost:7191/api/category/${categoryId.value}`, updatedCategory) //post request with new category
-    // const returnedCategory = response.data
-    // const a = [...categories.value, {...returnedCategory}] // create new array from existing categories, with updated category added
-    const filteredCategories = categories.value.filter(category => category.id !== categoryId.value)
-    categories.value = [...filteredCategories, response.data] // create new array from existing categories, with updated category added
+    // const filteredCategories = categories.value.filter(category => category.id !== categoryId.value)
+    const filteredCategories = categories.value.reduce((filteredArray, category) => {
+      if(category.id === categoryId.value) {
+        return [...filteredArray, response.data]
+      }
+      return [...filteredArray, category]
+    }, [])
+    categories.value = filteredCategories // create new array from existing categories, with updated category added
     categoryId.value = ''
     categoryName.value = ''
     categoryDescription.value = ''
